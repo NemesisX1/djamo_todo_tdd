@@ -16,8 +16,8 @@ class TodoDialog extends StatefulWidget {
 }
 
 class _TodoDialogState extends State<TodoDialog> {
-  final _titleController = TextEditingController();
-  final _bodyController = TextEditingController();
+  String _title = "";
+  String _body = "";
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +25,21 @@ class _TodoDialogState extends State<TodoDialog> {
       runSpacing: 10,
       children: [
         TextField(
-          controller: _titleController,
+          onChanged: (value) {
+            setState(() {
+              _title = value;
+            });
+          },
           decoration: const InputDecoration(
             hintText: "Title",
           ),
         ),
         TextField(
-          controller: _bodyController,
+          onChanged: (value) {
+            setState(() {
+              _body = value;
+            });
+          },
           decoration: const InputDecoration(
             hintText: "Body",
           ),
@@ -49,8 +57,8 @@ class _TodoDialogState extends State<TodoDialog> {
             if (widget.updateMode) {
               BlocProvider.of<TodosBloc>(context).add(
                 TodoEventUpdateTodo(
-                  title: _titleController.text,
-                  body: _bodyController.text,
+                  title: _title,
+                  body: _body,
                   id: widget.id!,
                   callback: callback,
                 ),
@@ -58,8 +66,8 @@ class _TodoDialogState extends State<TodoDialog> {
             } else {
               BlocProvider.of<TodosBloc>(context).add(
                 TodoEventCreateTodo(
-                  title: _titleController.text,
-                  body: _bodyController.text,
+                  title: _title,
+                  body: _body,
                   callback: callback,
                 ),
               );
