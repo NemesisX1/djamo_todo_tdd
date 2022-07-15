@@ -36,9 +36,11 @@ class TodoRemoteDataSourceImpl implements TodoRemoteDataSource {
         "title": title,
         "body": body,
       }).then((value) {
+        log(value.data.toString());
         return TodoModel.fromJson(value.data);
       });
     } catch (e) {
+      log("create error $e");
       return null;
     }
     return null;
@@ -89,15 +91,14 @@ class TodoRemoteDataSourceImpl implements TodoRemoteDataSource {
     String? body,
   }) async {
     try {
-      await dio
-          .put(
-        '/posts/$id',
-      )
-          .then((value) {
-        log(value.data);
+      await dio.put('/posts/$id', data: {
+        'title': title,
+        'body': body,
+      }).then((value) {
         return TodoModel.fromJson(value.data);
       });
     } catch (e) {
+      log(e.toString());
       return null;
     }
     return null;

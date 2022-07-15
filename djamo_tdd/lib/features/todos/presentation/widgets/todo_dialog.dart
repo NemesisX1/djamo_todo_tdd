@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:djamo_tdd/features/todos/presentation/bloc/todos_bloc.dart';
 import 'package:djamo_tdd/features/todos/presentation/pages/todos_view.dart';
@@ -48,7 +49,7 @@ class _TodoDialogState extends State<TodoDialog> {
           onPressed: () {
             // ignore: prefer_function_declarations_over_variables
             final callback = () {
-              Timer(Duration(seconds: 2), () {
+              Timer(Duration(seconds: 1), () {
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (_) => const TodoView()),
                     (route) => false);

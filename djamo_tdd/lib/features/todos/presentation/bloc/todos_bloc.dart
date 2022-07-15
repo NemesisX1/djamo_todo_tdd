@@ -37,18 +37,21 @@ class TodosBloc extends Bloc<TodosEvent, TodosState> {
           body: event.body,
         )
             .then((value) {
-          log("Created + ${value!.toJson()}");
+          log("Created");
         });
         emit(TodoLoaded());
-
-        event.callback!.call();
+        if (event.callback != null) {
+          event.callback!.call();
+        }
       } catch (e) {
         emit(TodoError(e.toString()));
-        log(e.toString());
+        log("create " + e.toString());
       }
     });
 
     on<TodoEventUpdateTodo>((event, emit) async {
+      log(event.title);
+      log("update is called");
       try {
         emit(TodosIsLoading());
         await remoteData
@@ -59,14 +62,16 @@ class TodosBloc extends Bloc<TodosEvent, TodosState> {
         )
             .then(
           (value) {
-            log("Updated + ${value!.toJson()}");
+            log("Updated");
           },
         );
         emit(TodoLoaded());
-        event.callback!.call();
+        if (event.callback != null) {
+          event.callback!.call();
+        }
       } catch (e) {
         emit(TodoError(e.toString()));
-        log(e.toString());
+        log("update " + e.toString());
       }
     });
 
