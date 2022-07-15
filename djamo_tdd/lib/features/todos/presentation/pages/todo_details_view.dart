@@ -76,8 +76,11 @@ class _TodoDetailsViewState extends State<TodoDetailsView> {
         onPressed: () => showDialog(
           context: context,
           builder: (context) {
-            return const AlertDialog(
-              content: TodoDialog(),
+            return AlertDialog(
+              content: TodoDialog(
+                updateMode: true,
+                id: widget.todo.id,
+              ),
             );
           },
         ),

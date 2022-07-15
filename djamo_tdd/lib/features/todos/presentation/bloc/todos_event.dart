@@ -17,6 +17,14 @@ class TodoEventFetchTodoComment extends TodosEvent {
   });
 }
 
+class TodoEventDeleteTodo extends TodosEvent {
+  final int id;
+
+  const TodoEventDeleteTodo({
+    required this.id,
+  });
+}
+
 class TodoEventFetchTodos extends TodosEvent {}
 
 class TodoEventUpdateTodo extends TodosEvent {

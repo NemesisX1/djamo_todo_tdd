@@ -81,5 +81,17 @@ class TodosBloc extends Bloc<TodosEvent, TodosState> {
         log(e.toString());
       }
     });
+
+    on<TodoEventDeleteTodo>((event, emit) async {
+      try {
+        emit(TodosIsLoading());
+        final todos = await remoteData.deleteTodo(id: event.id);
+
+        emit(TodoLoaded());
+      } catch (e) {
+        emit(TodoError(e.toString()));
+        log(e.toString());
+      }
+    });
   }
 }

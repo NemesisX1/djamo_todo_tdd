@@ -19,6 +19,10 @@ abstract class TodoRemoteDataSource {
     String? title,
     String? body,
   });
+
+  Future<TodoModel?> deleteTodo({
+    required int id,
+  });
 }
 
 class TodoRemoteDataSourceImpl implements TodoRemoteDataSource {
@@ -86,7 +90,26 @@ class TodoRemoteDataSourceImpl implements TodoRemoteDataSource {
   }) async {
     try {
       await dio
-          .patch(
+          .put(
+        '/posts/$id',
+      )
+          .then((value) {
+        log(value.data);
+        return TodoModel.fromJson(value.data);
+      });
+    } catch (e) {
+      return null;
+    }
+    return null;
+  }
+
+  @override
+  Future<TodoModel?> deleteTodo({
+    required int id,
+  }) async {
+    try {
+      await dio
+          .delete(
         '/posts/$id',
       )
           .then((value) {
