@@ -1,7 +1,12 @@
+import 'dart:async';
+
 import 'package:djamo_tdd/features/todos/domain/entities/todo.dart';
+import 'package:djamo_tdd/features/todos/presentation/bloc/todos_bloc.dart';
 import 'package:djamo_tdd/features/todos/presentation/pages/todo_details_view.dart';
+import 'package:djamo_tdd/features/todos/presentation/pages/todos_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
 class TodoWidget extends StatelessWidget {
@@ -24,6 +29,30 @@ class TodoWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  IconButton(
+                    onPressed: () {
+                      BlocProvider.of<TodosBloc>(context).add(
+                        TodoEventDeleteTodo(
+                          id: todo.id!,
+                          callback: () {
+                            Timer(
+                              Duration(seconds: 1),
+                              () {
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (_) => const TodoView()),
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      );
+                    },
+                    icon: const Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                    ),
+                  ),
                   Text(
                     todo.title.toString(),
                     style: const TextStyle(

@@ -20,8 +20,10 @@ class TodoEventFetchTodoComment extends TodosEvent {
 class TodoEventDeleteTodo extends TodosEvent {
   final int id;
 
+  final Function()? callback;
   const TodoEventDeleteTodo({
     required this.id,
+    this.callback,
   });
 }
 
